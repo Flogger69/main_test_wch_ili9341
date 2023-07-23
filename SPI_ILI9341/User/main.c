@@ -9,7 +9,6 @@
 * Attention: This software (modified or not) and binary are used for 
 * microcontroller manufactured by Nanjing Qinheng Microelectronics.
 *******************************************************************************/
-
 /*
  *@Note
  USART Print debugging routine:
@@ -23,7 +22,6 @@
 #include "debug.h"
 #include "ili9341.h"
 #include "touchpad.h"
-//#include "main.h"
 #include "../lvgl/lvgl.h"
 
 /* Global typedef */
@@ -33,11 +31,6 @@
 //uint32_t time=0;
 //__IO uint32_t Counter;
 //void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
-
-
-//volatile uint16_t LCD_HEIGHT = 240;
-//volatile uint16_t LCD_WIDTH	 = 320;
-
 
 /*********************************************************************
  * @fn      main
@@ -66,7 +59,17 @@ void lv_ex_led_1(void)
 }
 */
 
-
+/*
+static void event_handler(lv_obj_t * obj, lv_event_t event)
+{
+    if(event == LV_EVENT_VALUE_CHANGED) {
+        lv_calendar_date_t * date = lv_calendar_get_pressed_date(obj);
+        if(date) {
+            printf("Clicked date: %02d.%02d.%d\n", date->day, date->month, date->year);
+        }
+    }
+}
+*/
 static void event_handler(lv_obj_t * obj, lv_event_t event)
 {
     if(event == LV_EVENT_CLICKED) {
@@ -98,6 +101,31 @@ void lv_ex_btn_1(void)
     label = lv_label_create(btn2, NULL);
     lv_label_set_text(label, "Toggled");
 }
+
+
+void lv_ex_gauge_1(void)
+{
+    /*Describe the color for the needles*/
+    static lv_color_t needle_colors[3];
+    needle_colors[0] = LV_COLOR_BLUE;
+    needle_colors[1] = LV_COLOR_ORANGE;
+    needle_colors[2] = LV_COLOR_PURPLE;
+
+    /*Create a gauge*/
+    lv_obj_t * gauge1 = lv_gauge_create(lv_scr_act(), NULL);
+    lv_gauge_set_needle_count(gauge1, 3, needle_colors);
+    lv_obj_set_size(gauge1, 200, 200);
+    lv_obj_align(gauge1, NULL, LV_ALIGN_CENTER, 40, 0);
+
+    /*Set the values*/
+    lv_gauge_set_value(gauge1, 0, 50);
+    lv_gauge_set_value(gauge1, 1, 20);
+    lv_gauge_set_value(gauge1, 2, 30);
+}
+
+/**
+ * Advanced button transition examples
+ */
 
 void lv_ex_calendar_1(void)
 {
@@ -139,9 +167,6 @@ void MCU_INIT(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure = {0};
     SPI_InitTypeDef  SPI_InitStructure = {0};
-
-    //RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-   // RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1, ENABLE);
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;// | GPIO_Pin_5 | GPIO_Pin_7;CS
@@ -250,12 +275,15 @@ int main(void)
 	touchpad_init();
 	//ILI9341_Init();
 
-	ILI9341_FillScreen(0x0000);
-	ILI9341_FillRect(20,20,290,70,0xF800);
-	ILI9341_WriteString(30, 30,"HELLO Font_16x26", Font_16x26, 0xffff,0);
+	//ILI9341_FillScreen(0x0000);
+	//ILI9341_FillRect(20,20,290,70,0xF800);
+	//ILI9341_WriteString(30, 30,"HELLO Font_16x26", Font_16x26, 0xffff,0);
 
-	lv_ex_calendar_1();
-	//lv_ex_btn_1();
+	//lv_ex_keyboard_1();
+	//lv_ex_calendar_1();
+	//lv_ex_gauge_1();
+	//lv_ex_arc_1();
+	lv_ex_btn_1();
 	//lv_task_handler();
 	//Delay_Ms(3000);
 

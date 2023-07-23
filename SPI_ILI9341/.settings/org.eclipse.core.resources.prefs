@@ -30,6 +30,7 @@ encoding//User/xpt2046.h=GBK
 encoding//lvgl/examples/porting/lv_port_disp_template.c=GBK
 encoding//lvgl/lvgl.h=GBK
 encoding//lvgl/src/lv_core/lv_disp.h=GBK
+encoding//lvgl/src/lv_core/lv_obj.c=GBK
 encoding//lvgl/src/lv_core/lv_obj.h=GBK
 encoding//lvgl/src/lv_hal/lv_hal.h=GBK
 encoding//lvgl/src/lv_hal/lv_hal_disp.c=GBK
