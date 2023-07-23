@@ -1,8 +1,5 @@
 /*
  * xpt2046.h
- *
- *  Created on: Sep 5, 2021
- *      Author: paulo
  */
 
 #ifndef XPT2046_H_
