@@ -72,12 +72,17 @@ static void event_handler(lv_obj_t * obj, lv_event_t event)
 */
 static void event_handler(lv_obj_t * obj, lv_event_t event)
 {
-    if(event == LV_EVENT_CLICKED) {
-        printf("Clicked\n");
-    }
-    else if(event == LV_EVENT_VALUE_CHANGED) {
-        printf("Toggled\n");
-    }
+    if(event == LV_EVENT_PRESSED) {
+    	if( GPIO_ReadOutputDataBit(GPIOA, GPIO_Pin_1)==0){
+        GPIO_WriteBit(GPIOA, GPIO_Pin_1, Bit_SET);
+        }
+        else
+        {
+
+        	GPIO_WriteBit(GPIOA, GPIO_Pin_1, Bit_RESET);
+        }
+    	}
+
 }
 
 void lv_ex_btn_1(void)
@@ -188,7 +193,7 @@ void MCU_INIT(void)
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -270,6 +275,7 @@ int main(void)
 	printf("This is printf example\r\n");
 
 	MCU_INIT();
+	GPIO_WriteBit(GPIOA, GPIO_Pin_1, Bit_SET);
 	lv_init();
 	my_tft_init();
 	touchpad_init();
@@ -289,10 +295,11 @@ int main(void)
 
 	//lv_ex_led_1();
 	//lv_task_handler();
+
 	while(1)
     {
         Delay_Ms(5);
-        //GPIO_WriteBit(GPIOA, GPIO_Pin_0, (i == 0) ? (i = Bit_SET) : (i = Bit_RESET));
+     // : (i = Bit_RESET));
       lv_tick_inc(1);
       lv_task_handler();
 	}
