@@ -7,7 +7,6 @@
 uint16_t spi_data;
 lv_disp_drv_t * disp;
 static void my_flush_cb(lv_disp_drv_t *data_regv, const lv_area_t *area, lv_color_t *color_p);
-//static void tft_flush(lv_disp_drv_t * data_regv, const lv_area_t * area, lv_color_t * color_p);
 static void SetAddata_regessWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 
 static void SetAddata_regessWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
@@ -90,7 +89,6 @@ static void my_flush_cb(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_col
             color_p++;
         }
    }
-    //HAL_GPIO_WritePin(CSPin_GPIO_Port, CSPin_Pin, GPIO_PIN_SET);
 
     lv_disp_flush_ready(disp_drv);
 }
@@ -245,9 +243,7 @@ void ILI9341_WritePixel(uint16_t x, uint16_t y, uint16_t color)
 	//DC_H();
 	LCD_WR_DATA(data[0]);
 	LCD_WR_DATA(data[1]);
-//	if (HAL_SPI_Transmit(&hspi1, data, 2, 1000) != HAL_OK) {
-//		Error_Handler();
-//}
+
 }
 void ILI9341_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t color, uint16_t bgcolor)
 {
@@ -273,7 +269,7 @@ void ILI9341_WriteChar(uint16_t x, uint16_t y, char ch, FontDef font, uint16_t c
     }
 }
 void ILI9341_WriteString(uint16_t x, uint16_t y, const char* str, FontDef font, uint16_t color, uint16_t bgcolor) {
-  //  TFT9341_Select();
+  //  TFT9341_Select(); //CS -> 0 Not used CS pin is set to graund
 
     while(*str) {
         if(x + font.width >= GUI_WIDTH) {
